@@ -49,7 +49,6 @@ async function getUserData(userName){
     user.setInfo(userResponse) 
     user.setRepos (reposResponse) 
     user.setEvents(eventsResponse)
-    // user.setEvents (eventsResponse)
 
     screen.renderUser(user)
 }
