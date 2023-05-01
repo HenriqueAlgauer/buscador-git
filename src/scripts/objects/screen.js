@@ -24,17 +24,48 @@ const screen = {
                         </div>
                         </li>
                     </a>`)
-
                 let eventsItens = ''
-                user.events.forEach(event => event.type === 'PushEvent' ? eventsItens += `<li><a href='https://github.com/${event.repo.name}' target='_blank'>${event.repo.name}</a><span> - ${event.payload.commits[0].message}</span></li>` : eventsItens += `<li><a href='${event.repo.url}' target='_blank'>${event.payload.description ?? event.repo.name}</a><span> - ${event.type}</span></li>` )
 
-                if(user.repos.length > 0){
-                    this.userProfile.innerHTML += 
-                    `<div class='repositories section'>
-                        <h2>Repositórios</h2>
-                        <ul>${reposItens}</ul>
-                    </div>`
-                }
+                user.events.forEach(event => {
+                    if(event.type === 'PushEvent' ){
+                        eventsItens += 
+                        `<li class='eventos'>
+                            <a href='https://github.com/${event.repo.name}' target='_blank'>${event.repo.name}</a>
+                            <span> - ${event.payload.commits[0].message ?? ''} </span>
+                        </li>`
+                    }else{
+                        if(event.type === 'CreateEvent'){
+                            eventsItens += 
+                            `<li class='eventos'>
+                                <a href='https://github.com/${event.repo.name}' target='_blank'>${event.repo.name}</a>
+                                <span> - ${event.payload.description ??  event.type} </span>
+                            </li>`
+                        }else{
+                            console.log('caiu');
+                        }
+                    }
+                } )
+                
+                // user.events.forEach(event => 
+                // event.type === 'PushEvent' ? eventsItens += 
+                // `<li>
+                //     <a href='https://github.com/${event.repo.name}' target='_blank'>${event.repo.name}
+                //     </a><span> - ${event.payload.commits[0].message}
+                //     </span>
+                // </li>` 
+                // : eventsItens += 
+                // `<li>
+                //     <a href='${event.repo.url}' target='_blank'>${event.repo.name}</a>
+                //     <span> - ${event.payload.description ??  event.type}</span>
+                // </li>` )
+
+                // if(user.repos.length > 0){
+                //     this.userProfile.innerHTML += 
+                //     `<div class='repositories section'>
+                //         <h2>Repositórios</h2>
+                //         <ul>${reposItens}</ul>
+                //     </div>`
+                // }
 
                 if(user.events.length > 0){
                     this.userProfile.innerHTML += 
