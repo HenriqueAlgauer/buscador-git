@@ -1,15 +1,15 @@
 const screen = {
     userProfile: document.querySelector('.profile-data'),
     renderUser(user){
-        console.log(user);
+        
         this.userProfile.innerHTML= `
                         <div class="info">
                             <img src='${user.avatarUrl}' alt='foto de perfil user' />
                             <div class='data'>
                                 <h1>${user.name ?? 'Não possui nome cadastrado 😥'}</h1>
                                 <p>${user.bio ?? 'Não possui bio cadastrada 😥'}</p>
-                                <p>Seguidores :${user.followers}</p>
-                                <p>Seguindo :${user.following}</p>
+                                <p>Seguidores : ${user.followers}</p>
+                                <p>Seguindo : ${user.following}</p>
                             </div>
                         </div>`
                 let reposItens = ''
@@ -29,20 +29,28 @@ const screen = {
                 user.events.forEach(event => {
                     if(event.type === 'PushEvent' ){
                         eventsItens += 
-                        `<li>
+                        `<li class='eventos'>
                             <a href='https://github.com/${event.repo.name}' target='_blank'>${event.repo.name}</a>
                             <span> - ${event.payload.commits[0].message ?? ''} </span>
                         </li>`
                     }else{
                         if(event.type === 'CreateEvent'){
                             eventsItens += 
-                            `<li>
+                            `<li class='eventos'>
                                 <a href='https://github.com/${event.repo.name}' target='_blank'>${event.repo.name}</a>
                                 <span> - ${event.payload.description ??  event.type} </span>
                             </li>`
                         }
                     }
                 } )
+
+                if(user.repos.length > 0){
+                    this.userProfile.innerHTML += 
+                    `<div class='repositories section'>
+                        <h2>Repositórios</h2>
+                        <ul>${reposItens}</ul>
+                    </div>`
+                }
 
                 if(user.events.length > 0){
                     this.userProfile.innerHTML += 
@@ -51,7 +59,9 @@ const screen = {
                         <ul>${eventsItens}</ul>
                     </div>`
                 }
+                console.log(user);
             },
+            
     renderNotFound(){
         this.userProfile.innerHTML = "<h3>Usuário não foi encontrado </h3>"
     }
