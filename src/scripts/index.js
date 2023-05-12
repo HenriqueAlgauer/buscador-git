@@ -3,7 +3,9 @@
     // Adicionar novas props no objeto user 
     // Adiconar props na setInfo ( metodo user )
     // Adicionar novo texto no objeto screen   
-
+// Filter no array que busca os eventos no gitHub
+    // No memento em que ele procura pelos eventos, ele precisa filtrar por 2 eventos específicos 
+    // Depois de filtrar ele precisa precisa reotrnar um array 
 
 import {getUser}from './services/user.js'
 import {getRepos} from './services/repos.js'
